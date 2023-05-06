@@ -1,30 +1,39 @@
-const express = require('express')
-const path = require ('path')
+//instalados
+const express = require('express');
+const path = require ('path');
+//locais
+const db = require ('./dataBase');
+const routes = require('./routes');
 
-const app = express()
+
+const app = express();
+
+//conexão com banco
+db.connect()
 
 //define template engine
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 
 //definindo arquivos publicos
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 //habilita server para receber dados via post form
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
 
-//rotas
-app.get('/', (req, res) =>{
-    res.render('index', {
-        title:'titulo tst'
-    })
-})
+
+//rota
+app.use('/', routes)
+
 
 //404 error not found
 app.get('/', (req, res)=>{
-    res.send('pagina nao encontrada') //middleware
+    res.send('pagina nao encontrada');//middleware
 })
 
+
 //executando servidor
-const port = process.env.PORT || 8080
-app.listen(port, () => console.log(`Server is on port ${port}`))
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Server is on port ${port}`));
