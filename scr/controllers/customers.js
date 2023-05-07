@@ -44,16 +44,60 @@ async function listUsers(req, res){
         users,
     })
 }
+ 
+async function formEdit(req,res){
 
-function indexEdit(req,res){
+    const {id} = req.query
+
+    const user = await CustomersModel.findById(id)
+
     res.render('edit', {
         title: "Editar usuario",
+        user,
     })
+}
+
+async function edit(req, res){
+    const {
+        name,
+        age,
+        email,
+    }= req.body 
+
+    const { id } = req.params
+
+    const user =  await CustomersModel.findById(id)
+
+    user.name = name
+    user.age = age
+    user.email = email
+    
+    user.save()
+
+    res.render('edit', {
+        title:"Editar usuario",
+        user,
+        message:"Usuario alterado com sucesso"
+    })
+
+}
+
+async function remove(req, res){
+    const {id} = req.params
+
+    const remove = await CustomersModel.deleteOne({_id:id})
+
+    if(remove.ok){
+        res.redirec('/list')
+    }
+
 }
 
 module.exports = {
     add,
     index,
     listUsers,
-    indexEdit,
+    formEdit,
+    edit,
+    remove,
 }

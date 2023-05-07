@@ -15,7 +15,10 @@ router.post('/register/add', CustomersControler.add)
 router.get('/list', CustomersControler.listUsers)
 
 //editar
-router.get('/edit', CustomersControler.indexEdit)
-//router.post('/edit', CustomersControler.edit)
+router.get('/edit', CustomersControler.formEdit)
+router.post('/edit/:id', CustomersControler.edit)
+
+//apagar
+router.get('/remove/:id', CustomersControler.remove)
 
 module.exports = router
