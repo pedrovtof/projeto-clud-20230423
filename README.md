@@ -1,4 +1,4 @@
-# projeto-clud-20230423
+# projeto-crud-20230423
 Aula do curso FULLSTACKJS, treino pratico
 
 
